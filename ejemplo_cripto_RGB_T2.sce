@@ -25,7 +25,7 @@ function mensaje=descifrado_PA(mensaje_cifrado,alfabeto,alfabetos_de_cifrado)
        caracter=part(mensaje,i);
        posicion=strindex(alfabeto,caracter);
        cifrado=1+modulo((i-1),nca);
-       caracter_sustitutivo=part(alfabetos_de_cifrado(cifrado),posicion);
+       caracter_sustitutivo=part(alfabetos_de_descifrado(cifrado),posicion);
        mensaje_cifrado=mensaje_cifrado+caracter_sustitutivo;
    end
 endfunction
@@ -52,3 +52,4 @@ disp(mensajes_cifrados);
 
 disp(strcmp(mensajes_cifrados, mensajes_claros));
 
+disp(mensajes_cifrados);

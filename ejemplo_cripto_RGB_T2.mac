@@ -1,54 +1,48 @@
+kill(all);
+
 alfabeto:"RGB";
-alfabetos_de_cifrado: matrix(["BRG", "GBR", "RGB"]);
-alfabetos_de_descifrado: matrix(["GBR" "BRG" "RGB"]);
-mensaje: "RBBRBGGBBGGBRBBR";
+alfabetos_de_cifrado: ["BRG", "GBR", "RGB"];
+alfabetos_de_descifrado: ["GBR", "BRG", "RGB"];
+m0: "RBBRBGGBBGGBRBBR";
 
-mensaje_cifrado(mensaje, alfabeto, alfabetos_de_cifrado):
-function mensaje_cifrado=cifrado_PA(mensaje,alfabeto,alfabetos_de_cifrado)
-   nca=length(alfabeto);
-   n=length(mensaje);
-   mensaje_cifrado="";
-   for i=1:1:n
-       caracter=part(mensaje,i);
-       posicion:ssearch(alfabeto,caracter);
-       cifrado=1+modulo((i-1),nca);
-       caracter_sustitutivo=part(alfabetos_de_cifrado(cifrado),posicion);
-       mensaje_cifrado=mensaje_cifrado+caracter_sustitutivo;
-   end
-endfunction
+cifrado_PA(mensaje, alfabeto, alfabetos_de_cifrado):= block(
+    [nca:slength(alfabeto),
+    n:slength(mensaje),
+    mensaje_cifrado:""],
+    for i:1 thru n do (
+        caracter: charat(mensaje, i),
+        posicion: sposition(caracter, alfabeto),
+        cifrado: 1 + mod((i-1),nca),
+        caracter_sustitutivo: charat(part(alfabetos_de_cifrado,cifrado), posicion),
+        mensaje_cifrado: sconcat(mensaje_cifrado,caracter_sustitutivo)
+    ),
+    return(mensaje_cifrado)
+);
 
-function mensaje=descifrado_PA(mensaje_cifrado,alfabeto,alfabetos_de_cifrado)
-   nca=length(alfabeto);
-   n=length(mensaje);
-   mensaje_cifrado="";
-   for i=1:1:n
-       caracter=part(mensaje,i);
-       posicion=strindex(alfabeto,caracter);
-       cifrado=1+modulo((i-1),nca);
-       caracter_sustitutivo=part(alfabetos_de_cifrado(cifrado),posicion);
-       mensaje_cifrado=mensaje_cifrado+caracter_sustitutivo;
-   end
-endfunction
+descifrado_PA(mensaje, alfabeto, alfabetos_de_cifrado):= block(
+    [nca:slength(alfabeto),
+    n:slength(mensaje),
+    mensaje_cifrado:""],
+    for i:1 thru n do (
+        caracter: charat(mensaje, i),
+        posicion: sposition(caracter, alfabeto),
+        cifrado: 1 + mod((i-1),nca),
+        caracter_sustitutivo: charat(part(alfabetos_de_descifrado,cifrado), posicion),
+        mensaje_cifrado: sconcat(mensaje_cifrado,caracter_sustitutivo)
+    ),
+    return(mensaje_cifrado)
+);
 
-mensaje_cifrado=cifrado_PA(mensaje,alfabeto,alfabetos_de_cifrado);
-mensaje_recibido=descifrado_PA(mensaje_cifrado,alfabeto,alfabetos_de_descifrado);
+m1: cifrado_PA(m0,alfabeto, alfabetos_de_cifrado);
 
-if(strcmp(mensaje, mensaje_recibido)==0) then
-    disp("Mensajes descifrado correctamente");
+m2: descifrado_PA(m1,alfabeto, alfabetos_de_cifrado);
+
+disp("mensaje original:   ", m0);
+disp("mensaje cifrado:    ", m1);
+disp("mensaje descifrado: ", m2);
+
+if(sequal(m0,m2)) then
+  disp("Mensaje descifrado correctamente")
 else
-    disp("El mensaje recibido no coincide con el original");
-end
-
-
-disp("2.3");
-disp("---");
-mensajes_claros= [mensaje, "", "BGGBGRRGGRRGBGGB", "", "BRBBRGRRBRBBBRBB"];
-mensajes_cifrados= [mensaje_cifrado, "RBBRBGGBBGGBRBBR", "", "BGGBGRRGGRRGBGGB", ""];
-
-mensajes_cifrados(1,3)= cifrado_PA( mensajes_claros(1,3), alfabeto,alfabetos_de_cifrado);
-mensajes_cifrados(1,5)= cifrado_PA( mensajes_claros(1,5), alfabeto,alfabetos_de_cifrado);
-
-disp(mensajes_cifrados);
-
-disp(strcmp(mensajes_cifrados, mensajes_claros));
+  disp("El mensaje recibido no coincide con el original");
 
