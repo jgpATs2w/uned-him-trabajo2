@@ -2,10 +2,13 @@ kill(all);
 
 alfabeto:"RGB";
 alfabetos_de_cifrado: ["BRG", "GBR", "RGB"];
+
+/*el alfabeto de descifrado está compuesto por permutaciones del anterior.*/
 alfabetos_de_descifrado: ["GBR", "BRG", "RGB"];
 m0: "RBBRBGGBBGGBRBBR";
 
-cifrado_PA(mensaje, alfabeto, alfabetos_de_cifrado):= block(
+/*función de cifrado de mensajes*/
+procesa(mensaje, alfabeto, alfabetos_de_cifrado):= block(
     [nca:slength(alfabeto),
     n:slength(mensaje),
     mensaje_cifrado:""],
@@ -19,28 +22,15 @@ cifrado_PA(mensaje, alfabeto, alfabetos_de_cifrado):= block(
     return(mensaje_cifrado)
 );
 
-descifrado_PA(mensaje, alfabeto, alfabetos_de_cifrado):= block(
-    [nca:slength(alfabeto),
-    n:slength(mensaje),
-    mensaje_cifrado:""],
-    for i:1 thru n do (
-        caracter: charat(mensaje, i),
-        posicion: sposition(caracter, alfabeto),
-        cifrado: 1 + mod((i-1),nca),
-        caracter_sustitutivo: charat(part(alfabetos_de_descifrado,cifrado), posicion),
-        mensaje_cifrado: sconcat(mensaje_cifrado,caracter_sustitutivo)
-    ),
-    return(mensaje_cifrado)
-);
+m1: procesa(m0,alfabeto, alfabetos_de_cifrado);
 
-m1: cifrado_PA(m0,alfabeto, alfabetos_de_cifrado);
-
-m2: descifrado_PA(m1,alfabeto, alfabetos_de_cifrado);
+m2: procesa(m1,alfabeto, alfabetos_de_descifrado);
 
 disp("mensaje original:   ", m0);
 disp("mensaje cifrado:    ", m1);
 disp("mensaje descifrado: ", m2);
 
+/*para comprobar el correcto funcionamiento, se compara la cadena inicial y la final.*/
 if(sequal(m0,m2)) then
   disp("Mensaje descifrado correctamente")
 else

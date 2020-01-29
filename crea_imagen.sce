@@ -1,4 +1,4 @@
-imgFile='/home/eleuteron/workspace/uned-him-trabajo2/imagenRGB_T2.txt';
+imgFile='imagenRGB_T2.txt';
 Img=read_csv(imgFile, ' ');
 
 ImgIntegers= zeros(size(Img));

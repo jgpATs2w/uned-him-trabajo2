@@ -13,7 +13,9 @@ abstract: |
 
 # Métodos
 
-Para la resolución se han empleado las herramientas maxima 5.41 y scilab 6.0.1.
+Para la resolución se han empleado las herramientas maxima 5.41 y scilab 6.0.1.  
+Se ha empleado como base el código facilitado, empleando una única función `procesa` tanto para el cifrado como para el 
+descifrado.
 
 # Resultados
 
@@ -25,12 +27,16 @@ Para realizar el cifrado recorre la cadena, caracter a caracter y va aplicando l
 según el módulo base 3 de la posición del caracter dentro de la cadena.
 
 2.2)
-Se incluye el código solicitado en el archivo `ejemplo_cripto_RGB_T2.sce`.
+Se incluye el código solicitado en el archivo `ejemplo_cripto_RGB_T2.sce`.  
+Desde scilab o scilab-cli, ejecute `exec('ejemplo_cripto_RGB_T2.sce)`
 
 2.3)
 En el mismo archivo que el apartado anterior se incluye el cifrado y descifrado requerido.
 
 2.4)
+El código en máxima se encuentra en ejemplo_cripto_RGB_T2.mac.
+Desde maxima, ejecute `batchload("ejemplo_cripto_RGB_T2.mac");`
 
 2.5)
-Se hace uso de la función Matplot. El código se encuentra en `crea_imagen.sce`.
+Se hace uso de la función Matplot. El código se encuentra en `crea_imagen.sce`.  
+Desde scilab o scilab-cli, ejecute `exec('ejemplo_cripto_RGB_T2.sce)`
